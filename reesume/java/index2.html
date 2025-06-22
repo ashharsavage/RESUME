@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fahad Azmeer — Web Developer (11th Grader)</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <div class="theme-toggle">
+    <input type="checkbox" id="toggle">
+    <label for="toggle" class="toggle-label">
+      <i class="fas fa-sun"></i><i class="fas fa-moon"></i>
+    </label>
+  </div>
+
+  <main class="resume">
+    <header class="card reveal">
+      <div class="card center">
+  <h2>Fahad Azmeer</h2></div>
+      <h4 class="floating gradient-name">Fahad Azmeer</h4>
+      <p class="role neon">Aspiring Full‑Stack Web Developer (Class XI)</p>
+
+      <p class="contact">
+        <i class="fas fa-envelope"></i> fahadazmeer786@gmail.com |
+        <i class="fas fa-phone"></i> +91 9431534228
+      </p>
+      <p>
+        <a href="#"><i class="fab fa-dev"></i> Dev.to</a>
+        <a href="#"><i class="fab fa-github"></i> GitHub</a>
+      </p>
+      <a href="#contact" class="hire-btn">Hire Me</a>
+    </header>
+
+    <section class="card reveal">
+      <h2 class="neon">🎓 Education</h2>
+      <p>Studying in Class 11 at PW Vidyapeeth, Ranchi</p>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width:20%">Currently 20% completed</div>
+      </div>
+    </section>
+
+    <section class="card reveal">
+      <h2 class="neon">📚 Skills & Projects</h2>
+      <ul class="skills">
+        <li class="hover-glow">HTML/CSS</li>
+        <li class="hover-glow">JavaScript (ES6+)</li>
+        <li class="hover-glow">React & Redux</li>
+        <li class="hover-glow">Node.js & Express</li>
+        <li class="hover-glow">MongoDB</li>
+      </ul>
+      <p class="small">• Built a personal portfolio in React<br>
+      • Created “EduQuiz” — a quiz app for classmates<br>
+      • Deployed mini chat-app using Node & MongoDB</p>
+    </section>
+
+    <section class="card reveal">
+      <h2 class="neon">💼 Experience & Internships</h2>
+      <div class="job">
+        <h3>Junior Dev Intern @CodeClub Ranchi</h3>
+        <span class="job-date">Apr 2025 – Present</span>
+        <ul>
+          <li>Helped maintain the club website (React + Tailwind)</li>
+          <li>Taught HTML/CSS basics to peers in weekend workshops</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="contact" class="card reveal">
+      <h2 class="neon">📫 Contact Me</h2>
+      <p><strong>Email:</strong> <a href="mailto:fahadazmeer786@gmail.com">fahadazmeer786@gmail.com</a></p>
+      <p><strong>Phone:</strong> +91 9431534228</p>
+      <p><strong>Looking for:</strong> Freelance web projects or part-time dev work</p>
+    </section>
+  </main>
+
+  <script>
+    const docEl = document.documentElement, chk = document.getElementById('toggle');
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      docEl.setAttribute('data-theme','dark'); chk.checked=true;
+    }
+    chk.addEventListener('change', e => docEl.setAttribute('data-theme', e.target.checked ? 'dark' : 'light'));
+
+    const observer = new IntersectionObserver(entries => 
+      entries.forEach(e => e.isIntersecting && e.target.classList.add('show')), {threshold:0.15});
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    const canvas = document.getElementById('bg-canvas'), ctx = canvas.getContext('2d');
+    let w,h;
+    function resize(){ w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight; }
+    window.addEventListener('resize', resize);
+    resize();
+
+    const particles = Array.from({length:100}, ()=>{
+      return {x:Math.random()*w, y:Math.random()*h, r:1+Math.random()*2, vx:-0.3+Math.random()*0.6,
+              vy:-0.3+Math.random()*0.6, alpha:0.05+Math.random()*0.15};
+    });
+    function animate(){
+      ctx.clearRect(0,0,w,h);
+      particles.forEach(p=>{
+        p.x+=p.vx; p.y+=p.vy;
+        if(p.x<0||p.x>w||p.y<0||p.y>h){ p.x=Math.random()*w; p.y=Math.random()*h;}
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle=`rgba(255,255,255,${p.alpha})`;ctx.fill();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>

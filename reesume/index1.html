@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fahad Azmeer — Resume</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- 🎨 Canvas background with animated particles -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <!-- Toggle -->
+  <div class="theme-toggle">
+    <input type="checkbox" id="toggle">
+    <label for="toggle" class="toggle-label">
+      <i class="fas fa-sun"></i>
+      <i class="fas fa-moon"></i>
+    </label>
+  </div>
+
+  <!-- MAIN RESUME CONTENT -->
+  <main class="resume">
+    <header class="card reveal">
+      <h1 class="floating gradient-name">Fahad Azmeer </h1>
+      <p class="role neon">Full Stack Developer</p>
+      <p class="contact">
+        <i class="fas fa-envelope"></i> fahadazmeer786@gmail.com  |
+        <i class="fas fa-phone"></i> +91 9431534228
+      </p>
+      <p>
+        <a href="https://linkedin.com/in/Fahad Azmeerdoe" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        <a href="https://github.com/Fahad Azmeerdoe" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+      </p>
+      <a href="#contact" class="hire-btn">Hire Me</a>
+    </header>
+
+    <section class="card reveal">
+      <h2 class="neon">👨‍💻 Summary</h2>
+      <p>Experienced full-stack developer with a passion for modern web applications and delightful UI/UX.</p>
+    </section>
+
+    <section class="card reveal">
+      <h2 class="neon">⚒️ Skills</h2>
+      <ul class="skills">
+        <li class="hover-glow">JavaScript</li>
+        <li class="hover-glow">TypeScript</li>
+        <li class="hover-glow">React</li>
+        <li class="hover-glow">Node.js</li>
+        <li class="hover-glow">Tailwind</li>
+        <li class="hover-glow">Docker</li>
+      </ul>
+    </section>
+
+    <section class="card reveal">
+      <h2 class="neon">💼 Experience</h2>
+      <div class="job">
+        <h3>Junior Developer @CodeClub Ranchi </h3>
+        <span class="job-date">2021 – Present</span>
+        <ul>
+          <li>Built analytics dashboards using React and D3.</li>
+          <li>Led agile sprints with a remote-first team.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card reveal">
+      <h2 class="neon">🎓 Education</h2>
+      <p>Intermediate , Studying in Class 11th</p>
+    </section>
+
+    <section id="contact" class="card reveal">
+      <h2 class="neon">📫 Contact Me</h2>
+      <p>Email: <a href="mailto:fahadazmeer786@gmail.com">fahadazmeer786@gmail.com</a></p>
+      <p>Phone: +91 9431534228</p>
+      <p>Location: Irba, Ranchi, Jharkhand, India. </p>
+    </section>
+  </main>
+
+  <!-- THEME TOGGLE + PARTICLE BACKGROUND SCRIPT -->
+  <script>
+    const docEl = document.documentElement;
+    const chk = document.getElementById('toggle');
+
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      docEl.setAttribute('data-theme', 'dark');
+      chk.checked = true;
+    }
+
+    chk.addEventListener('change', e =>
+      docEl.setAttribute('data-theme', e.target.checked ? 'dark' : 'light')
+    );
+
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => e.isIntersecting && e.target.classList.add('show')),
+      { threshold: 0.15 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Floating particles
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let w, h;
+
+    function resizeCanvas() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const particles = Array.from({ length: 100 }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: 1 + Math.random() * 2,
+      vx: -0.3 + Math.random() * 0.6,
+      vy: -0.3 + Math.random() * 0.6,
+      alpha: 0.05 + Math.random() * 0.15
+    }));
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, w, h);
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > w || p.y < 0 || p.y > h) {
+          p.x = Math.random() * w;
+          p.y = Math.random() * h;
+        }
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${p.alpha})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+  </script>
+  <div class="card center">
+  <h2>About me <a href="/java/index2.html">Click here</a></h2>
+</div>
+
+</body>
+</html>
